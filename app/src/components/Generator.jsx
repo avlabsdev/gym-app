@@ -33,6 +33,26 @@ export default function Generator() {
     setShowModal(!showModal);
   }
 
+  function updateMuscles(muscleGroup) {
+    if (muscle.length > 2) {
+      setMuscle(muscle.filter((val) => val !== muscleGroup));
+      return;
+    }
+
+    if (poison !== "individual") {
+      setMuscle([muscleGroup]);
+      setShowModal(false);
+      return;
+    }
+
+    if (muscle.includes(muscleGroup)) {
+      setMuscle(muscle.filter((val) => val !== muscleGroup));
+      return;
+    }
+
+    setMuscle([...muscle, muscleGroup]);
+  }
+
   return (
     <div>
       <SectionWrapper
@@ -79,7 +99,16 @@ export default function Generator() {
                 : Object.keys(WORKOUTS[poison])
               ).map((muscleGroup, muscleGroupIndex) => {
                 return (
-                  <button key={muscleGroupIndex}>
+                  <button
+                    onClick={() => {
+                      updateMuscles(muscleGroup);
+                    }}
+                    className={
+                      "bg-red-500 " +
+                      (muscle.includes(muscleGroup) ? "bg-green-500" : "")
+                    }
+                    key={muscleGroupIndex}
+                  >
                     {muscleGroup.replaceAll("_", " ")}
                   </button>
                 );
