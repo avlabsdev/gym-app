@@ -46,7 +46,20 @@ export default function Generator() {
         />
         <div>
           {Object.keys(WORKOUTS).map((type, typeIndex) => {
-            return <button key={typeIndex}>{type.replaceAll("_", " ")}</button>;
+            return (
+              <button
+                className={
+                  "bg-red-500 " +
+                  (type === poison ? "bg-red-700" : "bg-green-500")
+                }
+                onClick={() => {
+                  setPoison(type);
+                }}
+                key={typeIndex}
+              >
+                {type.replaceAll("_", " ")}
+              </button>
+            );
           }, [])}
         </div>
         <Header
@@ -62,9 +75,9 @@ export default function Generator() {
           {showModal && <div>Modal</div>}
         </div>
         <Header
-          index={"01"}
-          title={"Pick your poison"}
-          description={"Select the workout you wish to endure."}
+          index={"03"}
+          title={"Become Juggernaut"}
+          description={"Select your ultimate objective."}
         />
         <div>
           {Object.keys(SCHEMES).map((scheme, schemeIndex) => {
