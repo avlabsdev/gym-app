@@ -23,8 +23,8 @@ export default function Generator() {
   // react way of handling state
   const [showModal, setShowModal] = useState(false);
   const [poison, setPoison] = useState("individual");
-  const [muscles, setMuscles] = useState([]);
-  const [goals, setGoals] = useState("strength_power");
+  const [muscle, setMuscle] = useState([]);
+  const [goal, setGoal] = useState("strength_power");
 
   // traditional way of handling state
   //   let showModal = false;
@@ -72,7 +72,20 @@ export default function Generator() {
             <p>Select muscle groups</p>
             <FontAwesomeIcon icon={faCaretDown} />
           </button>
-          {showModal && <div>Modal</div>}
+          {showModal && (
+            <div>
+              {(poison === "individual"
+                ? WORKOUTS[poison]
+                : Object.keys(WORKOUTS[poison])
+              ).map((muscleGroup, muscleGroupIndex) => {
+                return (
+                  <button key={muscleGroupIndex}>
+                    {muscleGroup.replaceAll("_", " ")}
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </div>
         <Header
           index={"03"}
@@ -82,7 +95,14 @@ export default function Generator() {
         <div>
           {Object.keys(SCHEMES).map((scheme, schemeIndex) => {
             return (
-              <button key={schemeIndex}>{scheme.replaceAll("_", " ")}</button>
+              <button
+                onClick={() => {
+                  setGoal(scheme);
+                }}
+                key={schemeIndex}
+              >
+                {scheme.replaceAll("_", " ")}
+              </button>
             );
           }, [])}
         </div>
