@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import SectionWrapper from "./SectionWrapper";
-import { WORKOUTS } from "./../utils/swoldier";
+import { WORKOUTS, SCHEMES } from "./../utils/swoldier";
+
+// icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
 function Header(props) {
   const { index, title, description } = props;
@@ -16,6 +20,19 @@ function Header(props) {
 }
 
 export default function Generator() {
+  // react way of handling state
+  const [showModal, setShowModal] = useState(false);
+  const [poison, setPoison] = useState("individual");
+  const [muscles, setMuscles] = useState([]);
+  const [goals, setGoals] = useState("strength_power");
+
+  // traditional way of handling state
+  //   let showModal = false;
+
+  function toggleModal() {
+    setShowModal(!showModal);
+  }
+
   return (
     <div>
       <SectionWrapper
@@ -38,8 +55,22 @@ export default function Generator() {
           description={"Select the muscles judged for annihilation."}
         />
         <div>
-          {Object.keys(WORKOUTS).map((type, typeIndex) => {
-            return <button key={typeIndex}>{type.replaceAll("_", " ")}</button>;
+          <button onClick={toggleModal}>
+            <p>Select muscle groups</p>
+            <FontAwesomeIcon icon={faCaretDown} />
+          </button>
+          {showModal && <div>Modal</div>}
+        </div>
+        <Header
+          index={"01"}
+          title={"Pick your poison"}
+          description={"Select the workout you wish to endure."}
+        />
+        <div>
+          {Object.keys(SCHEMES).map((scheme, schemeIndex) => {
+            return (
+              <button key={schemeIndex}>{scheme.replaceAll("_", " ")}</button>
+            );
           }, [])}
         </div>
       </SectionWrapper>
