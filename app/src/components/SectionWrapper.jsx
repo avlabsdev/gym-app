@@ -10,7 +10,7 @@ export default function SectionWrapper(props) {
           {title[0]} <span>{title[1]}</span> {title[2]}
         </h2>
       </div>
-      {children}
+      <div>{children}</div>
     </section>
   );
 }
