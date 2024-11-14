@@ -6,6 +6,9 @@ import { WORKOUTS, SCHEMES } from "./../utils/swoldier";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
+// component imports
+import Button from "./Button";
+
 function Header(props) {
   const { index, title, description } = props;
   return (
@@ -34,6 +37,11 @@ export default function Generator() {
   }
 
   function updateMuscles(muscleGroup) {
+    if (muscle.includes(muscleGroup)) {
+      setMuscle(muscle.filter((val) => val !== muscleGroup));
+      return;
+    }
+
     if (muscle.length > 2) {
       setMuscle(muscle.filter((val) => val !== muscleGroup));
       return;
@@ -45,12 +53,11 @@ export default function Generator() {
       return;
     }
 
-    if (muscle.includes(muscleGroup)) {
-      setMuscle(muscle.filter((val) => val !== muscleGroup));
-      return;
-    }
-
     setMuscle([...muscle, muscleGroup]);
+
+    if (muscle.length === 2) {
+      setShowModal(false);
+    }
   }
 
   return (
@@ -73,6 +80,7 @@ export default function Generator() {
                   (type === poison ? "bg-red-700" : "bg-green-500")
                 }
                 onClick={() => {
+                  setMuscle([]);
                   setPoison(type);
                 }}
                 key={typeIndex}
@@ -89,7 +97,9 @@ export default function Generator() {
         />
         <div>
           <button onClick={toggleModal}>
-            <p>Select muscle groups</p>
+            <p>
+              {muscle.length === 0 ? "Select muscle groups" : muscle.join(" ")}
+            </p>
             <FontAwesomeIcon icon={faCaretDown} />
           </button>
           {showModal && (
@@ -135,6 +145,7 @@ export default function Generator() {
             );
           }, [])}
         </div>
+        <Button text={"Generate Workout"} />
       </SectionWrapper>
     </div>
   );

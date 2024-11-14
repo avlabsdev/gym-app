@@ -1,5 +1,8 @@
 import React from "react";
 
+// component imports
+import Button from "./Button";
+
 export default function Hero() {
   return (
     <div>
@@ -13,7 +16,7 @@ export default function Hero() {
         doloremque <span>beatae enim</span> ex quaerat reprehenderit minus.
         Nihil omnis quisquam obcaecati?
       </p>
-      <button>Accept & Begin</button>
+      <Button text={"Accept & Begin"} />
     </div>
   );
 }
